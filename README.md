@@ -5,6 +5,8 @@ PortService uses Posgres for database
 
 Dependencies are vendored for faster offline development and go.mod has local rewrite directives 
 
+Proto file: [PortDomainService/service.proto](http://github.com/tonky/shipping/PortDomainService/service.proto) 
+
 ## Running
 
 Prerequisites: vendor dependencies for all services

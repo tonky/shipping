@@ -6,12 +6,11 @@ package ports
 import (
 	context "context"
 	fmt "fmt"
-	math "math"
-
 	proto "github.com/golang/protobuf/proto"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	math "math"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -238,6 +237,7 @@ func (m *UpsertSummary) GetElapsedTime() int64 {
 	return 0
 }
 
+// we may not have a port in DB, this is a poor's man Option<T> :)
 type MaybePort struct {
 	Found                bool     `protobuf:"varint,1,opt,name=found,proto3" json:"found,omitempty"`
 	Port                 *Port    `protobuf:"bytes,2,opt,name=port,proto3" json:"port,omitempty"`
