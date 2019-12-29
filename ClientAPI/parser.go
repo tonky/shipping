@@ -73,3 +73,40 @@ func streamDecodePorts(r io.Reader) (chan domain.Port, chan error) {
 
 	return pc, errCh
 }
+
+type jsPort struct {
+	Name        string
+	City        string
+	Country     string
+	Alias       []string
+	Regions     []string
+	Coordinates []float64
+	Province    string
+	Timezone    string
+	Unlocs      []string
+	Code        string
+}
+
+func jsToDomain(key string, jp jsPort) domain.Port {
+	p := domain.Port{
+		Key:          key,
+		Name:         jp.Name,
+		City:         jp.City,
+		Country:      jp.Country,
+		Aliases:      jp.Alias,
+		Regions:      jp.Regions,
+		Province:     jp.Province,
+		LocationName: jp.Timezone,
+		Unlocs:       jp.Unlocs,
+		Code:         jp.Code,
+	}
+
+	if len(jp.Coordinates) == 2 {
+		p.Latitude = jp.Coordinates[0]
+		p.Longitude = jp.Coordinates[1]
+	} else {
+		log.Println("Bad coordinates: ", key, jp)
+	}
+
+	return p
+}

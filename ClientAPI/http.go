@@ -6,7 +6,6 @@ import (
 	"net/http"
 
 	"github.com/tonky/shipping/ClientAPI/portService"
-	"github.com/tonky/shipping/PortDomainService/domain"
 )
 
 type api struct {
@@ -45,41 +44,4 @@ func (ah api) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	w.Write(jp)
-}
-
-type jsPort struct {
-	Name        string
-	City        string
-	Country     string
-	Alias       []string
-	Regions     []string
-	Coordinates []float64
-	Province    string
-	Timezone    string
-	Unlocs      []string
-	Code        string
-}
-
-func jsToDomain(key string, jp jsPort) domain.Port {
-	p := domain.Port{
-		Key:          key,
-		Name:         jp.Name,
-		City:         jp.City,
-		Country:      jp.Country,
-		Aliases:      jp.Alias,
-		Regions:      jp.Regions,
-		Province:     jp.Province,
-		LocationName: jp.Timezone,
-		Unlocs:       jp.Unlocs,
-		Code:         jp.Code,
-	}
-
-	if len(jp.Coordinates) == 2 {
-		p.Latitude = jp.Coordinates[0]
-		p.Longitude = jp.Coordinates[1]
-	} else {
-		log.Println("Bad coordinates: ", key, jp)
-	}
-
-	return p
 }
