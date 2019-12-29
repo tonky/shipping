@@ -9,14 +9,10 @@ Dependencies are vendored for faster offline development and go.mod has local re
 
 Prerequisites: vendor dependencies for all services
 
-    $ cd ClientAPI &&  go mod vendor && cd -
-    /repo/
-
-    $ cd PortDomainService &&  go mod vendor && cd -
-    /repo/
-
-    $ cd tests &&  go mod vendor && cd -
-    /repo/
+    $ for i in "tests" "ClientAPI" "PortDomainService"; do cd $i && go mod vendor && cd -; done
+    /repo
+    /repo
+    /repo
 
 ### With docker compose
 
