@@ -3,9 +3,20 @@
 API exposes HTTP endpoint and communicates with PortService via GRPC
 PortService uses Posgres for database
 
-Dependencies are vendored and go.mod has local rewrite directives for offline development
+Dependencies are vendored for faster offline development and go.mod has local rewrite directives 
 
 ## Running
+
+Prerequisites: vendor dependencies for all services
+
+    $ cd ClientAPI &&  go mod vendor && cd -
+    /repo/
+
+    $ cd PortDomainService &&  go mod vendor && cd -
+    /repo/
+
+    $ cd tests &&  go mod vendor && cd -
+    /repo/
 
 ### With docker compose
 
