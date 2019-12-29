@@ -1,0 +1,55 @@
+version: "3"
+
+services:
+  domain:
+   build: ./PortDomainService
+   environment:
+    - USER
+    - PASSWORD
+    - HOST
+    - PORT
+    - DBNAME
+   depends_on:
+    - db
+   ports:
+       - 1234:1234
+   networks:
+    - net
+
+  api:
+   build: ./ClientAPI
+   volumes:
+    - ./sampleData:/data/:z
+   environment:
+    - DOMAIN_SERVICE_ADDR
+    - LOAD_FILE
+   depends_on:
+    - domain
+   ports:
+       - 8080:8080
+   networks:
+    - net
+
+  tests:
+   build: ./tests
+   environment:
+    - DOMAIN_SERVICE_ADDR
+    - API_ADDR
+   depends_on:
+    - api
+   networks:
+    - net
+
+  db:
+   image: postgres
+   environment:
+    POSTGRES_PASSWORD: $PASSWORD
+   networks:
+    - net
+      
+networks:
+ net:
+  driver: bridge
+#  environment:
+#    - POSTGRES_USER=sonar
+#    - POSTGRES_PASSWORD=sonar

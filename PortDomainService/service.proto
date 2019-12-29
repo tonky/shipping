@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package ports;
+
+// Interface exported by the server.
+service Ports {
+  rpc Get(SearchRequest) returns (MaybePort) {}
+  rpc Upsert(stream Port) returns (UpsertSummary) {}
+}
+
+message SearchRequest {
+    string name = 1;
+}
+
+message Port {
+    string name = 1;
+    string city = 2;
+    string country = 3;
+    repeated string alias = 4;
+    repeated string regions = 5;
+    double latitude = 6;
+    double longitude = 7;
+    string province = 8;
+    string location_name = 9;
+    repeated string unlocs = 10;
+    string code = 11;
+    string key = 12;
+}
+
+message UpsertSummary {
+    int64 count = 1;
+    int64 elapsed_time = 2;
+}
+
+// we may not have a port in DB, this is a poor's man Option<T> :)
+message MaybePort {
+    bool found = 1;
+    Port port = 2;
+}
